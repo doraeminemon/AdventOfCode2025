@@ -4,6 +4,14 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"strconv"
+)
+
+type Direction bool
+
+const (
+	Left Direction = true
+	Right Direction = false
 )
 
 func Clock() {
@@ -13,6 +21,24 @@ func Clock() {
 	// end pos
 	// check if position is at 0
 	// times that the counter is at 0
+}
+
+func ReadCommand(command string) (direction Direction, increment int) {
+	dirStr := command[0:1]
+	switch dirStr {
+		case "L":
+			direction = Left
+		case "R":
+			direction = Right
+		default:
+			log.Fatal("Unknown command")
+	}
+	incrementStr := command[1:]
+	increment, err := strconv.Atoi(incrementStr)
+	if err != nil {
+		log.Fatal("Cannot parse string to int")
+	}
+	return
 }
 
 func ReadFile() []string {
