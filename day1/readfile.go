@@ -2,12 +2,20 @@ package day1
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 )
 
-func ReadFile() string {
+func Clock() {
+	// range: 0 -> 99
+	// movement: L / R
+	// start pos
+	// end pos
+	// check if position is at 0
+	// times that the counter is at 0
+}
+
+func ReadFile() []string {
 	file, err := os.Open("./input")
 	if err != nil {
 		log.Fatal(err)
@@ -17,12 +25,13 @@ func ReadFile() string {
 
 	scanner := bufio.NewScanner(file)
 
+	result := []string{}
 	for scanner.Scan() {
-		fmt.Println(scanner.Text())
+		result = append(result, scanner.Text())
 	}
 
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
-	return scanner.Text()
+	return result
 }

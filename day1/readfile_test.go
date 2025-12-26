@@ -5,5 +5,6 @@ import (
 )
 
 func TestReadFile(t *testing.T) {
-	ReadFile()
+	result := ReadFile()
+	t.Log(result)
 }
