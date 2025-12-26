@@ -19,17 +19,21 @@ type Command struct {
 	increment int
 }
 
-func Clock() {
-	// defaultPos := 50
-	// zeroPos := 0
-	// maxPos := 99
-	// atZeroCounter := 0
-	// range: 0 -> 99
-	// movement: L / R
-	// start pos
-	// end pos
-	// check if position is at 0
-	// times that the counter is at 0
+type ClockPosition int
+
+func Turn(prevPos ClockPosition, command Command) ClockPosition {
+	if command.direction == Right {
+		nextPos := prevPos + ClockPosition(command.increment)
+		if nextPos > 99 {
+			return nextPos - 100
+		}
+		return nextPos
+	}
+	nextPos := prevPos - ClockPosition(command.increment)
+	if nextPos < 0 {
+		return 100 + nextPos
+	}
+	return nextPos
 }
 
 func ReadCommand(command string) (result Command) {
