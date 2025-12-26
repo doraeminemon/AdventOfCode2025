@@ -25,7 +25,6 @@ func Run(commmandList ...[]Command) (passcode int) {
 	startPos := 50
 	var commands []Command
 	if len(commmandList) == 0 {
-		commands := []Command{}
 		strCommands := ReadFile()
 		for _, strCommand := range strCommands {
 			commands = append(commands, ParseCommand(strCommand))
@@ -47,14 +46,14 @@ func Run(commmandList ...[]Command) (passcode int) {
 func Turn(prevPos ClockPosition, command Command) ClockPosition {
 	if command.direction == Right {
 		nextPos := prevPos + command.increment
-		if nextPos > 99 {
-			return nextPos - 100
+		for nextPos > 99 {
+			nextPos = nextPos - 100
 		}
 		return nextPos
 	}
 	nextPos := prevPos - command.increment
-	if nextPos < 0 {
-		return 100 + nextPos
+	for nextPos < 0 {
+		nextPos = 100 + nextPos
 	}
 	return nextPos
 }

@@ -25,7 +25,7 @@ func TestReadCommandLeft(t *testing.T) {
 
 func TestTurnLeftNegative(t *testing.T) {
 	got := Turn(50, Command{Left, 68})
-	want := ClockPosition(82)
+	want := 82
 	if (got != want) {
 		t.Fail()
 	}
@@ -33,7 +33,7 @@ func TestTurnLeftNegative(t *testing.T) {
 
 func TestTurnLefttPositive(t *testing.T) {
 	got := Turn(5 , Command{Left, 5})
-	want := ClockPosition(0)
+	want := 0
 	if (got != want) {
 		t.Fail()
 	}
@@ -41,7 +41,7 @@ func TestTurnLefttPositive(t *testing.T) {
 
 func TestTurnRightPositive(t *testing.T) {
 	got := Turn(0, Command{Right, 5})
-	want := ClockPosition(5)
+	want := 5
 	if (got != want) {
 		t.Fail()
 	}
@@ -49,8 +49,26 @@ func TestTurnRightPositive(t *testing.T) {
 
 func TestTurnRightNegative(t *testing.T) {
 	got := Turn(50, Command{Right, 68})
-	want := ClockPosition(18)
+	want := 18
 	if (got != want) {
+		t.Fail()
+	}
+}
+
+func TestTurnLeftPast100(t *testing.T) {
+	got := Turn(50, Command{Left, 223})
+	want := 27
+	if got != want {
+		t.Log(got)
+		t.Fail()
+	}
+}
+
+func TestTurnRightPast100(t *testing.T) {
+	got := Turn(50, Command{Right, 223})
+	want := 73
+	if got != want {
+		t.Log(got)
 		t.Fail()
 	}
 }
