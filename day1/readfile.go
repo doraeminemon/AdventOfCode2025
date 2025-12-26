@@ -14,7 +14,16 @@ const (
 	Right Direction = false
 )
 
+type Command struct {
+	direction Direction
+	increment int
+}
+
 func Clock() {
+	// defaultPos := 50
+	// zeroPos := 0
+	// maxPos := 99
+	// atZeroCounter := 0
 	// range: 0 -> 99
 	// movement: L / R
 	// start pos
@@ -23,13 +32,13 @@ func Clock() {
 	// times that the counter is at 0
 }
 
-func ReadCommand(command string) (direction Direction, increment int) {
+func ReadCommand(command string) (result Command) {
 	dirStr := command[0:1]
 	switch dirStr {
 		case "L":
-			direction = Left
+			result.direction = Left
 		case "R":
-			direction = Right
+			result.direction = Right
 		default:
 			log.Fatal("Unknown command")
 	}
@@ -38,6 +47,7 @@ func ReadCommand(command string) (direction Direction, increment int) {
 	if err != nil {
 		log.Fatal("Cannot parse string to int")
 	}
+	result.increment = increment
 	return
 }
 

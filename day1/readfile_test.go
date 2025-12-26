@@ -14,11 +14,11 @@ func TestReadFile(t *testing.T) {
 }
 
 func TestReadCommandLeft(t *testing.T) {
-	dir, inc := ReadCommand("L12")
-	if dir != Left {
+	res := ReadCommand("L12")
+	if res.direction != Left {
 		t.Log("Wrong direction")
 	}
-	if inc != 12 {
+	if res.increment != 12 {
 		t.Log("Wrong increment")
 	}
 }
