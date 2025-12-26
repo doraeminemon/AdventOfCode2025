@@ -1,0 +1,28 @@
+package day1
+
+import (
+	"bufio"
+	"fmt"
+	"log"
+	"os"
+)
+
+func ReadFile() string {
+	file, err := os.Open("./input")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		fmt.Println(scanner.Text())
+	}
+
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+	return scanner.Text()
+}
