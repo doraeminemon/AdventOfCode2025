@@ -19,24 +19,47 @@ type Command struct {
 	increment int
 }
 
-type ClockPosition int
+type ClockPosition = int
+
+func Run(commmandList ...[]Command) (passcode int) {
+	startPos := 50
+	var commands []Command
+	if len(commmandList) == 0 {
+		commands := []Command{}
+		strCommands := ReadFile()
+		for _, strCommand := range strCommands {
+			commands = append(commands, ParseCommand(strCommand))
+		}
+	} else {
+		commands = commmandList[0]
+	}
+	passcode = 0
+	for _, command := range commands {
+		nextPos := Turn(startPos, command)
+		if nextPos == 0 {
+			passcode++
+		}
+		startPos = nextPos
+	}
+	return passcode
+}
 
 func Turn(prevPos ClockPosition, command Command) ClockPosition {
 	if command.direction == Right {
-		nextPos := prevPos + ClockPosition(command.increment)
+		nextPos := prevPos + command.increment
 		if nextPos > 99 {
 			return nextPos - 100
 		}
 		return nextPos
 	}
-	nextPos := prevPos - ClockPosition(command.increment)
+	nextPos := prevPos - command.increment
 	if nextPos < 0 {
 		return 100 + nextPos
 	}
 	return nextPos
 }
 
-func ReadCommand(command string) (result Command) {
+func ParseCommand(command string) (result Command) {
 	dirStr := command[0:1]
 	switch dirStr {
 		case "L":

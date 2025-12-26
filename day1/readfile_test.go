@@ -14,7 +14,7 @@ func TestReadFile(t *testing.T) {
 }
 
 func TestReadCommandLeft(t *testing.T) {
-	res := ReadCommand("L12")
+	res := ParseCommand("L12")
 	if res.direction != Left {
 		t.Log("Wrong direction")
 	}
@@ -53,4 +53,28 @@ func TestTurnRightNegative(t *testing.T) {
 	if (got != want) {
 		t.Fail()
 	}
+}
+
+func TestRun(t *testing.T) {
+	got := Run([]Command{
+		{Left, 68},
+		{Left, 30},
+		{Right, 48},
+		{Left, 5},
+		{Right, 60},
+		{Left, 55},
+		{Left, 1},
+		{Left, 99},
+		{Right, 14},
+		{Left, 82},
+	})
+	want := 3
+	if got != want {
+		t.Fail()
+	}
+}
+
+func TestRunWithInput(t *testing.T) {
+	res := Run()
+	t.Log(res)
 }
