@@ -2,6 +2,7 @@ package day1
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -46,6 +47,33 @@ func Run(commmandList ...[]Command) (passcode int) {
 	return passcode
 }
 
+// A function to run the clock according to the commands
+// and output the passcode based on the times that the
+// clock position ended at 0 and passed through 0
+func RunMark2(commmandList ...[]Command) (passcode int) {
+	startPos := 50
+	var commands []Command
+	if len(commmandList) == 0 {
+		strCommands := ReadFile()
+		for _, strCommand := range strCommands {
+			commands = append(commands, ParseCommand(strCommand))
+		}
+	} else {
+		commands = commmandList[0]
+	}
+	passcode = 0
+	for _, command := range commands {
+		nextPos, additionalPasscode := TurnMark2(startPos, command)
+		if nextPos == 0 {
+			passcode++
+		}
+		fmt.Printf("command %+v, add %+v \n", command, additionalPasscode)
+		passcode += additionalPasscode
+		startPos = nextPos
+	}
+	return passcode
+}
+
 // Function to returns the next clock position based on the
 // the previous position and command
 func Turn(prevPos ClockPosition, command Command) ClockPosition {
@@ -61,6 +89,26 @@ func Turn(prevPos ClockPosition, command Command) ClockPosition {
 		nextPos = 100 + nextPos
 	}
 	return nextPos
+}
+
+// Function to returns the next clock position and the time
+// it passed through based on the the previous position and command
+func TurnMark2(prevPos ClockPosition, command Command) (clockPos ClockPosition, passcode int) {
+	passcode = 0
+	if command.direction == Right {
+		nextPos := prevPos + command.increment
+		for nextPos > 99 {
+			passcode++
+			nextPos = nextPos - 100
+		}
+		return nextPos, passcode
+	}
+	nextPos := prevPos - command.increment
+	for nextPos < 0 {
+		passcode++
+		nextPos = 100 + nextPos
+	}
+	return nextPos, passcode
 }
 
 // Parse the string command and output the command as a struct

@@ -31,7 +31,7 @@ func TestTurnLeftNegative(t *testing.T) {
 	}
 }
 
-func TestTurnLefttPositive(t *testing.T) {
+func TestTurnLeftPositive(t *testing.T) {
 	got := Turn(5 , Command{Left, 5})
 	want := 0
 	if (got != want) {
@@ -73,6 +73,84 @@ func TestTurnRightPast100(t *testing.T) {
 	}
 }
 
+
+func TestTurnMark2LeftNegative(t *testing.T) {
+	got, gotPass := TurnMark2(50, Command{Left, 68})
+	want := 82
+	wantPass := 1
+	if (got != want) {
+		t.Fail()
+	}
+	if (gotPass != wantPass) {
+		t.Log(gotPass)
+		t.Fail()
+	}
+}
+
+func TestTurnMark2LeftPositive(t *testing.T) {
+	got, gotPass := TurnMark2(5 , Command{Left, 5})
+	want := 0
+	wantPass := 0
+	if (got != want) {
+		t.Fail()
+	}
+	if (gotPass != wantPass) {
+		t.Fail()
+	}
+}
+
+func TestTurnMark2RightPositive(t *testing.T) {
+	got, gotPass := TurnMark2(0, Command{Right, 5})
+	want := 5
+	wantPass := 0
+	if (got != want) {
+		t.Fail()
+	}
+	if (gotPass != wantPass) {
+		t.Fail()
+	}
+}
+
+func TestTurnMark2RightNegative(t *testing.T) {
+	got, gotPass := TurnMark2(50, Command{Right, 68})
+	want := 18
+	wantPass := 1
+	if (got != want) {
+		t.Fail()
+	}
+	if (gotPass != wantPass) {
+		t.Fail()
+	}
+}
+
+func TestTurnMark2LeftPast100(t *testing.T) {
+	got, gotPass := TurnMark2(50, Command{Left, 223})
+	want := 27
+	wantPass := 2
+	if got != want {
+		t.Log(got)
+		t.Fail()
+	}
+	if gotPass != wantPass {
+		t.Log(gotPass)
+		t.Fail()
+	}
+}
+
+func TestTurnMarkRightPast100(t *testing.T) {
+	got, gotPass := TurnMark2(50, Command{Right, 223})
+	want := 73
+	wantPass := 2
+	if got != want {
+		t.Log(got)
+		t.Fail()
+	}
+	if gotPass != wantPass {
+		t.Log(gotPass)
+		t.Fail()
+	}
+}
+
 func TestRun(t *testing.T) {
 	got := Run([]Command{
 		{Left, 68},
@@ -96,3 +174,28 @@ func TestRunWithInput(t *testing.T) {
 	res := Run()
 	t.Log(res)
 }
+
+func TestRunMark2(t *testing.T) {
+	got := RunMark2([]Command{
+		{Left, 68},
+		{Left, 30},
+		{Right, 48},
+		{Left, 5},
+		{Right, 60},
+		{Left, 55},
+		{Left, 1},
+		{Left, 99},
+		{Right, 14},
+		{Left, 82},
+	})
+	want := 6
+	if got != want {
+		t.Log(got)
+		t.Fail()
+	}
+}
+
+// func TestRunMark2WithInput(t *testing.T) {
+// 	res := RunMark2()
+// 	t.Log(res)
+// }
