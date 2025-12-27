@@ -21,6 +21,9 @@ type Command struct {
 
 type ClockPosition = int
 
+// A function to run the clock according to the commands
+// and output the passcode based on the times that the
+// clock position ended at 0
 func Run(commmandList ...[]Command) (passcode int) {
 	startPos := 50
 	var commands []Command
@@ -43,6 +46,8 @@ func Run(commmandList ...[]Command) (passcode int) {
 	return passcode
 }
 
+// Function to returns the next clock position based on the
+// the previous position and command
 func Turn(prevPos ClockPosition, command Command) ClockPosition {
 	if command.direction == Right {
 		nextPos := prevPos + command.increment
@@ -58,6 +63,7 @@ func Turn(prevPos ClockPosition, command Command) ClockPosition {
 	return nextPos
 }
 
+// Parse the string command and output the command as a struct
 func ParseCommand(command string) (result Command) {
 	dirStr := command[0:1]
 	switch dirStr {
@@ -77,6 +83,7 @@ func ParseCommand(command string) (result Command) {
 	return
 }
 
+// Read the file commands and list out the text command line by line
 func ReadFile() []string {
 	file, err := os.Open("./input")
 	if err != nil {
